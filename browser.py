@@ -5,28 +5,28 @@ import requests
 from bs4 import BeautifulSoup
 from colorama import Fore, Style
 # write your code here
-args = sys.argv
+args = sys.argv  # works with cmd
 dir_name = args[1]
 
 try:
-    os.makedirs(f'{dir_name}')
+    os.makedirs(f'{dir_name}')  #Check if directory if available 
 except FileExistsError:
     print("Directory already available")
 
-my_stack = deque()
+my_stack = deque()  # Creating a deque
 while True:
     site = input()
 
     if site.startswith('http'):
         site = site.replace("https://", '')
-    file_name = site.rsplit('.', 1)[0]
+    file_name = site.rsplit('.', 1)[0]  # Removes the extension e.g .org, .com
 
     if site == 'exit':
         break
 
     elif site == 'back':
         my_stack.pop()
-        print(my_stack[-1].pop())
+        print(my_stack[-1].pop())  # Back takes us back to previous tab, deleting recent tab
 
     elif '.' not in site:
         if os.path.exists(f'{dir_name}/{file_name}'):
@@ -45,10 +45,10 @@ while True:
         for tag in ans:
             if tag.string:
                 if tag.name == 'a':
-                    r = Fore.BLUE + tag.string
+                    r = Fore.BLUE + tag.string  # Paint links blue
 
                 else:
-                    r = Style.RESET_ALL + tag.string
+                    r = Style.RESET_ALL + tag.string  # other text remain normal
 
                 with open(f'{dir_name}/{file_name}', 'w') as file:
                     file.write(r)
